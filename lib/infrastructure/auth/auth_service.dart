@@ -40,4 +40,8 @@ class AuthService {
       throw Exception('Failed to sign out');
     }
   }
+
+  Stream<User?> onAuthStateChanged() {
+    return supabase.auth.onAuthStateChange.map((event) => event.session?.user);
+  }
 }
