@@ -8,13 +8,11 @@ jobs:
             SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
 
         steps:
-          - name: Make .env
-            uses: SpicyPizza/create-envfile@v2.0
-            with:
-              envkey_SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
-              file_name: .env
-
           - uses: actions/checkout@v4
+
+          - name: Make .env
+            run: |
+              echo "SUPABASE_SERVICE_ROLE_KEY=$SUPABASE_SERVICE_ROLE_KEY" > .env
 
           - name: Set up Flutter
             uses: subosito/flutter-action@v2
