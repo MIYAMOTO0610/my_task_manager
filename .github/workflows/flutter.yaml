@@ -10,7 +10,9 @@ jobs:
         steps:
           - name: Make .env
             run: |
-              echo "SUPABASE_SERVICE_ROLE_KEY=$SUPABASE_SERVICE_ROLE_KEY" > .env
+              cat > ./.env <<EOF
+              SUPABASE_SERVICE_ROLE_KEY=$SUPABASE_SERVICE_ROLE_KEY
+              EOF
 
           - uses: actions/checkout@v4
 
