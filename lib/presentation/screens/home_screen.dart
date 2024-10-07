@@ -1,13 +1,13 @@
 ﻿import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:my_task_manager/application/providers/auth_provider.dart';
+import 'package:my_task_manager/domain/repositories/auth/auth_repository.dart';
 
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final authService = ref.read(authServiceProvider);
+    final repository = ref.read(authRepositoryProvider);
     return SafeArea(
       child: Scaffold(
         body: SingleChildScrollView(
@@ -15,7 +15,7 @@ class HomeScreen extends ConsumerWidget {
           child: Column(
             children: [
               TextButton(
-                onPressed: () async => await authService.signOut(),
+                onPressed: () async => await repository.signOut(),
                 child: const Text('ログアウト'),
               ),
             ],

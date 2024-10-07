@@ -1,6 +1,6 @@
 ﻿import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
-import 'package:my_task_manager/application/providers/auth_provider.dart';
+import 'package:my_task_manager/domain/repositories/auth/auth_repository.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
@@ -25,7 +25,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   @override
   Widget build(BuildContext contexts) {
-    final authService = ref.watch(authServiceProvider);
+    final repository = ref.watch(authRepositoryProvider);
 
     return SafeArea(
       child: Scaffold(
@@ -50,14 +50,14 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   onPressed: () async {
                     try {
                       if (_isSignUp) {
-                        await authService.signUp(
-                          _emailController.text,
-                          _passwordController.text,
+                        await repository.signUp(
+                          email: _emailController.text,
+                          password: _passwordController.text,
                         );
                       } else {
-                        await authService.signIn(
-                          _emailController.text,
-                          _passwordController.text,
+                        await repository.signIn(
+                          email: _emailController.text,
+                          password: _passwordController.text,
                         );
                       }
                     } catch (e) {

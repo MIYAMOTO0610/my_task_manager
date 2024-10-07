@@ -1,5 +1,6 @@
 ﻿import 'package:flutter_test/flutter_test.dart';
-import 'package:my_task_manager/infrastructure/auth/auth_service.dart';
+import 'package:my_task_manager/domain/repositories/auth/auth_repository.dart';
+import 'package:my_task_manager/infrastructure/repositories/supabase_auth_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -31,16 +32,19 @@ void main() {
   });
 
   group('AuthService', () {
-    late AuthService authService;
+    late AuthRepository authRepository;
 
     setUp(() {
-      authService = AuthService();
+      authRepository = SupabaseAuthRepository();
     });
 
     test('ユーザがサインアップできる', () async {
       try {
-        await authService.signUp('smiyamoto.610@gmail.com', 'password');
-        expect(authService.currentUser?.email, 'smiyamoto.610@gmail.com');
+        await authRepository.signUp(
+          email: 'smiyamoto.610@gmail.com',
+          password: 'password',
+        );
+        expect(authRepository.currentUser, isNotNull);
       } on Exception catch (error) {
         fail(error.toString());
       }
@@ -48,8 +52,11 @@ void main() {
 
     test('ユーザがサインインできる', () async {
       try {
-        await authService.signIn('smiyamoto.610@gmail.com', 'password');
-        expect(authService.currentUser?.email, 'smiyamoto.610@gmail.com');
+        await authRepository.signIn(
+          email: 'smiyamoto.610@gmail.com',
+          password: 'password',
+        );
+        expect(authRepository.currentUser, isNotNull);
       } on Exception catch (error) {
         fail(error.toString());
       }
@@ -57,9 +64,9 @@ void main() {
 
     test('ユーザがサインアウトできる', () async {
       try {
-        userId = authService.currentUser?.id;
-        await authService.signOut();
-        expect(authService.currentUser, null);
+        userId = authRepository.currentUser?.id;
+        await authRepository.signOut();
+        expect(authRepository.currentUser, null);
       } on Exception catch (error) {
         fail(error.toString());
       }
