@@ -9,10 +9,10 @@ jobs:
 
         steps:
           - name: Make .env
-            run: |
-              cat > ./.env <<EOF
-              SUPABASE_SERVICE_ROLE_KEY=$SUPABASE_SERVICE_ROLE_KEY
-              EOF
+            uses: SpicyPizza/create-envfile@v2.0
+            with:
+              envkey_SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+              file_name: .env
 
           - uses: actions/checkout@v4
 
