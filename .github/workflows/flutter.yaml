@@ -8,6 +8,10 @@ jobs:
             SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
 
         steps:
+          - name: Make .env
+            run: |
+              echo "SUPABASE_SERVICE_ROLE_KEY=$SUPABASE_SERVICE_ROLE_KEY" > .env
+
           - uses: actions/checkout@v4
 
           - name: Set up Flutter
